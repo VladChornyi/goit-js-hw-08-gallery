@@ -59,6 +59,27 @@ window.addEventListener('keydown', e => {
     modalNode.classList.remove('is-open');
     modalImg.src = '';
   }
+  let itemIndex;
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight')
+    itemIndex = galleryItems.findIndex(item => item.original === modalImg.src);
+  if (e.key === 'ArrowLeft') {
+    if (itemIndex === 0) {
+      modalImg.src = galleryItems[galleryItems.length - 1].original;
+      modalImg.alt = galleryItems[galleryItems.length - 1].description;
+    } else {
+      modalImg.src = galleryItems[itemIndex - 1].original;
+      modalImg.alt = galleryItems[itemIndex - 1].description;
+    }
+  }
+  if (e.key === 'ArrowRight') {
+    if (itemIndex + 1 >= galleryItems.length) {
+      modalImg.src = galleryItems[0].original;
+      modalImg.alt = galleryItems[0].description;
+    } else {
+      modalImg.src = galleryItems[itemIndex + 1].original;
+      modalImg.alt = galleryItems[itemIndex + 1].description;
+    }
+  }
 });
 
 modalCloseBtn.addEventListener('click', e => {
@@ -77,7 +98,9 @@ const markup = galleryItems
       class="gallery__image"
       src="${img.preview}"
       data-source="${img.original}"
+      
       alt="${img.description}"
+
     />
   </a>
 </li>`,
