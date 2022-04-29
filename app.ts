@@ -1,4 +1,10 @@
-const galleryItems = [
+interface Gallery{
+  preview: string,
+  original: string,
+  description: string
+}
+
+const galleryItems :Gallery[] = [
   {
     preview: 'https://cdn.pixabay.com/photo/2019/05/14/16/43/himilayan-blue-poppy-4202825__340.jpg',
     original:
@@ -50,7 +56,7 @@ const gallery = document.querySelector('.js-gallery');
 
 const modalNode = document.querySelector('.lightbox');
 
-const modalImg = document.querySelector('.lightbox__image');
+const modalImg:HTMLImageElement = document.querySelector('.lightbox__image');
 
 const modalCloseBtn = document.querySelector('.lightbox__button');
 
@@ -59,7 +65,7 @@ window.addEventListener('keydown', e => {
     modalNode.classList.remove('is-open');
     modalImg.src = '';
   }
-  let itemIndex;
+  let itemIndex:number;
   if (e.key === 'ArrowLeft' || e.key === 'ArrowRight')
     itemIndex = galleryItems.findIndex(item => item.original === modalImg.src);
   if (e.key === 'ArrowLeft') {
@@ -110,8 +116,8 @@ gallery.innerHTML = markup;
 
 gallery.addEventListener('click', e => {
   e.preventDefault();
-  if (e.target.tagName !== 'IMG') return false;
+  if ((e.target as HTMLElement).tagName !== 'IMG') return false;
   modalNode.classList.add('is-open');
-  modalImg.src = e.target.dataset.source;
-  modalImg.alt = e.target.alt;
+  modalImg.src = (e.target as HTMLElement).dataset.source;
+  modalImg.alt = (e.target as HTMLImageElement).alt;
 });
